@@ -4,7 +4,6 @@
 # IDE
 /.idea
 /.awcache
-/.vscode
 
 # misc
 npm-debug.log
@@ -20,3 +19,5 @@ test-schema.graphql
 # dist
 /lib/src
 /dist
+
+.history/
