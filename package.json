@@ -14,6 +14,7 @@
     "prepublish:next": "npm run build",
     "publish:next": "npm publish --access public --tag next",
     "test:integration": "jest --config ./tests/jest-e2e.json --runInBand",
+    "test1": "jest --config ./tests/jest-e2e.json --runInBand tests/e2e/code-first.spec.ts",
     "test:integration:dev": "jest --config ./tests/jest-e2e.json --runInBand --watch",
     "prerelease": "npm run build",
     "release": "release-it"

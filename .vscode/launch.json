@@ -14,7 +14,7 @@
       "type": "node",
       "args": [
         "--config",
-        "/tests/jest-e2e.json",
+        "${workspaceFolder}/tests/jest-e2e.json",
         "--runInBand",
         "--testTimeout",
         "999999999",

@@ -47,10 +47,10 @@ export class ResolversExplorerService extends BaseExplorerService {
   }
 
   explore() {
-    const modules = this.getModules(
+    const modules = this.getModules( // 返回所有的modules
       this.modulesContainer,
       this.gqlOptions.include || [],
-    );
+    ); // instance === provider InstanceWrapper , moduleRef === Module
     const resolvers = this.flatMap(modules, (instance, moduleRef) =>
       this.filterResolvers(instance, moduleRef),
     );

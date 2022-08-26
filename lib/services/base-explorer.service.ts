@@ -34,7 +34,7 @@ export class BaseExplorerService {
         const providers = [...moduleRef.providers.values()];
         return providers.map(wrapper => callback(wrapper, moduleRef));
       });
-    };
+    };// flattenDeep([1,[2,[3]]]) === [1,2,3] , identity([1,2] , [2,3]) == [1,2]
     return flattenDeep(invokeMap()).filter(identity);
   }
 

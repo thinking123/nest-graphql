@@ -7,14 +7,39 @@ import {
 } from '../graphql.constants';
 import { UndefinedResolverTypeError } from '../schema-builder/errors/undefined-resolver-type.error';
 import { ResolverTypeFn } from './resolver.decorator';
+/*
 
+export const SetMetadata = <K = string, V = any>(
+  metadataKey: K,
+  metadataValue: V,
+): CustomDecorator<K> => {
+  const decoratorFactory = (target: object, key?: any, descriptor?: any) => {
+    if (descriptor) {
+      Reflect.defineMetadata(metadataKey, metadataValue, descriptor.value);
+      return descriptor;
+    }
+    Reflect.defineMetadata(metadataKey, metadataValue, target);
+    return target;
+  };
+  decoratorFactory.KEY = metadataKey;
+  return decoratorFactory;
+};
+SetMetadata , 如果 descriptor !== null
+
+在descriptor.value 保存 metadataKey, metadataValue,
+
+否则在 target 保存
+
+*/
+// 保存 resolver 和 name  
 export function addResolverMetadata(
   resolver: Resolver | string | undefined,
   name: string | undefined,
   target?: Record<string, any> | Function,
   key?: string | symbol,
   descriptor?: any,
-) {
+) {// Reflect.defineMetadata(RESOLVER_TYPE_METADATA, resolver || name, descriptor.value || target , undefined);
+  // Map(descriptor.value || target , Map(undefined, Map(RESOLVER_TYPE_METADATA,RESOLVER_NAME_METADATA, resolver,name)))
   SetMetadata(RESOLVER_TYPE_METADATA, resolver || name)(
     target,
     key,

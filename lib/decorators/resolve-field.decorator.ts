@@ -54,7 +54,7 @@ export function ResolveField(
 ): MethodDecorator;
 /**
  * Property resolver (method) Decorator.
- */
+ */ // @ResolveField(() => ResolveFieldClass, { nullable: true })
 export function ResolveField(
   propertyNameOrFunc?: string | ReturnTypeFunc,
   typeFuncOrOptions?: ReturnTypeFunc | ResolveFieldOptions,

@@ -3,6 +3,7 @@ import { Test } from '@nestjs/testing';
 import * as request from 'supertest';
 import { ApplicationModule } from '../code-first/app.module';
 
+// 调试测试代码 debug 
 describe('Code-first', () => {
   let app: INestApplication;
 

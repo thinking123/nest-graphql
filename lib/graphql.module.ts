@@ -60,6 +60,14 @@ export class GraphQLModule implements OnModuleInit {
 
   static forRoot(options: GqlModuleOptions = {}): DynamicModule {
     options = mergeDefaults(options);
+    /*
+autoSchemaFile: true
+context: ({ req }) => ({ req })
+debug: false
+fieldResolverEnhancers: []
+installSubscriptionHandlers: true
+path:'/graphql'
+    */
     return {
       module: GraphQLModule,
       providers: [
@@ -131,7 +139,7 @@ export class GraphQLModule implements OnModuleInit {
       (await this.graphqlTypesLoader.mergeTypesByPaths(
         this.options.typePaths,
       )) || [];
-
+ // mergedTypeDefs = []
     const mergedTypeDefs = extend(typeDefs, this.options.typeDefs);
     const apolloOptions = await this.graphqlFactory.mergeOptions({
       ...this.options,

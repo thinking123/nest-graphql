@@ -58,8 +58,9 @@ export function ObjectType(
   const interfaces = options.implements
     ? [].concat(options.implements)
     : undefined;
-  return (target) => {
+  return (target) => { // target === Class
     const addObjectTypeMetadata = () =>
+    //   this.objectTypes 
       TypeMetadataStorage.addObjectTypeMetadata({
         name: name || target.name,
         target,
@@ -71,6 +72,7 @@ export function ObjectType(
     // This function must be called eagerly to allow resolvers
     // accessing the "name" property
     addObjectTypeMetadata();
+    //  this.storage.
     LazyMetadataStorage.store(addObjectTypeMetadata);
 
     addClassTypeMetadata(target, ClassType.OBJECT);

@@ -46,11 +46,11 @@ export function Mutation(
 ): MethodDecorator;
 /**
  * Mutation handler (method) Decorator. Routes specified mutation to this method.
- */
+ */ // @Mutation(() => ReturnClass)
 export function Mutation(
   nameOrType?: string | ReturnTypeFunc,
   options: MutationOptions = {},
-): MethodDecorator {
+): MethodDecorator { // key === functionname
   return (target: Object | Function, key?: string, descriptor?: any) => {
     const name = isString(nameOrType)
       ? nameOrType

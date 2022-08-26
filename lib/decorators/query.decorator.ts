@@ -46,13 +46,13 @@ export function Query(
 ): MethodDecorator;
 /**
  * Query handler (method) Decorator. Routes specified query to this method.
- */
+ */ // @Query(() => ReturnType , {description: "xx"})
 export function Query(
   nameOrType?: string | ReturnTypeFunc,
   options: QueryOptions = {},
 ): MethodDecorator {
   return (target: Object | Function, key?: string, descriptor?: any) => {
-    const name = isString(nameOrType)
+    const name = isString(nameOrType) // undefined
       ? nameOrType
       : (options && options.name) || undefined;
 

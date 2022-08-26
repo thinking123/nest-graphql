@@ -18,6 +18,7 @@ export type ResolverTypeFn = (of?: void) => Type<any>;
  */
 function getObjectTypeNameIfExists(nameOrType: Function): string | undefined {
   const ctor = getClassOrUndefined(nameOrType);
+  // objectTypesMetadata = this.objectTypes = []
   const objectTypesMetadata = TypeMetadataStorage.getObjectTypesMetadata();
   const objectMetadata = objectTypesMetadata.find(type => type.target === ctor);
   if (!objectMetadata) {
@@ -71,16 +72,18 @@ export function Resolver(
   nameOrTypeOrOptions?: string | ResolverTypeFn | Type<any> | ResolverOptions,
   options?: ResolverOptions,
 ): MethodDecorator & ClassDecorator {
-  return (
-    target: Object | Function,
-    key?: string | symbol,
-    descriptor?: any,
+  return ( // @Resolver(() => TestClass) class ResolverTestClass
+    target: Object | Function, // ResolverTestClass
+    key?: string | symbol, // undefined
+    descriptor?: any,// undefined
   ) => {
+    // nameOrType === () => TestClass
     const [nameOrType, resolverOptions] =
       typeof nameOrTypeOrOptions === 'object' && nameOrTypeOrOptions !== null
         ? [undefined, nameOrTypeOrOptions]
         : [nameOrTypeOrOptions as string | ResolverTypeFn | Type<any>, options];
-
+    // @Resolver(() => TestClass)
+    // name === TestClass.name === "TestClass"
     let name = nameOrType && getClassName(nameOrType);
 
     if (isFunction(nameOrType)) {
