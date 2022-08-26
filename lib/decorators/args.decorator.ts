@@ -78,7 +78,7 @@ export function Args(
  * object from the underlying platform and populates the decorated
  * parameter with the value of either all arguments or a single specified argument.
  */
-export function Args(
+export function Args( // @Args("uuid")
   propertyOrOptionsOrPipe?:
     | string
     | (Type<PipeTransform> | PipeTransform)
@@ -86,12 +86,14 @@ export function Args(
   optionsOrPipe?: ArgsOptions | (Type<PipeTransform> | PipeTransform),
   ...pipes: (Type<PipeTransform> | PipeTransform)[]
 ): ParameterDecorator {
+  // property === @Args("uuid") === uuid
   const [property, argOptions, argPipes] = getArgsOptions(
     propertyOrOptionsOrPipe,
     optionsOrPipe,
     pipes,
   );
-
+ // fun(@Args('uuid') param)
+ // key === "param" , param index
   return (target: Object, key: string, index: number) => {
     addPipesMetadata(GqlParamtype.ARGS, property, argPipes, target, key, index);
 

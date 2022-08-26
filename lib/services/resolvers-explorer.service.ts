@@ -84,17 +84,30 @@ export class ResolversExplorerService extends BaseExplorerService {
       (name) => extractMetadata(instance, prototype, name, predicate),
     );
 
+    /*
+resolvers = [
+  { type: "Query", methodName: "recipe", name: "recipe" },
+  { type: "Query", methodName: "search", name: "search" },
+  { type: "Query", methodName: "recipes", name: "recipes" },
+  { type: "Mutation", methodName: "addRecipe", name: "addRecipe" },
+  { type: "Recipe", methodName: "getIngredients", name: "ingredients" },
+  { type: "Recipe", methodName: "count", name: "count" },
+  { type: "Recipe", methodName: "rating", name: "rating" },
+  { type: "Mutation", methodName: "removeRecipe", name: "removeRecipe" },
+  { type: "Subscription", methodName: "recipeAdded", name: "recipeAdded" },
+]
+    */
     const isRequestScoped = !wrapper.isDependencyTreeStatic();
     return resolvers
       .filter((resolver) => !!resolver)
       .map((resolver) => {
         const createContext = (transform?: Function) =>
           this.createContextCallback(
-            instance,
-            prototype,
-            wrapper,
-            moduleRef,
-            resolver,
+            instance, // RecipesResolver instance 
+            prototype, // class RecipesResolver.prototype
+            wrapper,// RecipesResolver InstanceWrapper
+            moduleRef, // Module
+            resolver, //   { type: "Query", methodName: "recipe", name: "recipe" }
             isRequestScoped,
             transform,
           );
@@ -127,6 +140,7 @@ export class ResolversExplorerService extends BaseExplorerService {
     transform: Function = identity,
   ) {
     const paramsFactory = this.gqlParamsFactory;
+    // is ResolveField
     const isPropertyResolver = ![
       Resolver.MUTATION,
       Resolver.QUERY,
@@ -142,7 +156,7 @@ export class ResolversExplorerService extends BaseExplorerService {
         }
       : undefined;
 
-    if (isRequestScoped) {
+    if (isRequestScoped) { // false 
       const resolverCallback = async (...args: any[]) => {
         const gqlContext = paramsFactory.exchangeKeyForValue(
           GqlParamtype.CONTEXT,
@@ -194,10 +208,10 @@ export class ResolversExplorerService extends BaseExplorerService {
       Record<number, ParamMetadata>,
       GqlContextType
     >(
-      instance,
-      prototype[resolver.methodName],
-      resolver.methodName,
-      PARAM_ARGS_METADATA,
+      instance, // RecipesResolver instance 
+      prototype[resolver.methodName], // function
+      resolver.methodName, // function name
+      PARAM_ARGS_METADATA, // @Args('uuid') [`Args:index`:{index,data,pipes}]
       paramsFactory,
       undefined,
       undefined,
