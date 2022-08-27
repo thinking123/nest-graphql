@@ -112,3 +112,17 @@ export function ResolveField(
     });
   };
 }
+
+/*
+  @ResolveField('ingredients', () => [Ingredient])
+  getIngredients(@Parent() root) {
+    return [new Ingredient({ name: 'cherry' })];
+  }
+
+  @ResolveField((type) => Number)
+  count(@Args() filters: FilterRecipesCountArgs) {
+    return 10;
+  }
+
+
+*/

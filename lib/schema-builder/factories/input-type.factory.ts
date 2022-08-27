@@ -19,7 +19,7 @@ export class InputTypeFactory {
     buildOptions: BuildSchemaOptions,
     typeOptions: TypeOptions = {},
   ): GraphQLInputType {
-    let inputType:
+    let inputType: //返回custom scalar 和 内置类型(String,...)
       | GraphQLInputType
       | undefined = this.typeMapperService.mapToScalarType(
       typeRef,
@@ -28,7 +28,7 @@ export class InputTypeFactory {
     );
     if (!inputType) {
       inputType = this.typeDefinitionsStorage.getInputTypeAndExtract(
-        typeRef as any,
+        typeRef as any, // NewRecipeInput
       );
       if (!inputType) {
         throw new CannotDetermineInputTypeError(hostType);
@@ -36,7 +36,7 @@ export class InputTypeFactory {
     }
 
     return this.typeMapperService.mapToGqlType(
-      hostType,
+      hostType, //@Args('newRecipeData')
       inputType,
       typeOptions,
     );

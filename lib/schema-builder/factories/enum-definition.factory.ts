@@ -37,3 +37,15 @@ export class EnumDefinitionFactory {
     }, {});
   }
 }
+/*
+var RGBType = new GraphQLEnumType({
+  name: 'RGB',
+  values: {
+    RED: { value: 0 },
+    GREEN: { value: 1 },
+    BLUE: { value: 2 }
+  }
+});
+
+
+*/

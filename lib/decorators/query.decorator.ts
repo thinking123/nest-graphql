@@ -74,7 +74,7 @@ export function Query(
         methodName: key,
         schemaName: options.name || key,
         target: target.constructor,
-        typeFn,
+        typeFn, // @Query(b => ClassType) typeFn === b => ClassType
         returnTypeOptions: typeOptions,
         description: options.description,
         deprecationReason: options.deprecationReason,

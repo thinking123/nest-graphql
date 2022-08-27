@@ -18,3 +18,15 @@ export function ArgsType(): ClassDecorator {
     addClassTypeMetadata(target, ClassType.ARGS);
   };
 }
+/*
+@ArgsType()
+export class FilterRecipesCountArgs {
+  @Field({ nullable: true })
+  type?: string;
+
+  @Field({ nullable: true })
+  status?: string;
+}
+
+
+*/

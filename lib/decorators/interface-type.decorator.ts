@@ -65,3 +65,19 @@ export function InterfaceType(
     addClassTypeMetadata(target, ClassType.INTERFACE);
   };
 }
+/*
+@InterfaceType({
+  description: 'example interface',
+  resolveType: value => {
+    return Recipe;
+  },
+})
+export abstract class IRecipe {
+  @Field(type => ID)
+  id: string;
+
+  @Field()
+  title: string;
+}
+
+*/

@@ -93,7 +93,7 @@ export function Args( // @Args("uuid")
     pipes,
   );
  // fun(@Args('uuid') param)
- // key === "param" , param index
+ // key === "fun" , param index
   return (target: Object, key: string, index: number) => {
     addPipesMetadata(GqlParamtype.ARGS, property, argPipes, target, key, index);
 
@@ -178,3 +178,20 @@ function getArgsOptions(
 
   return [undefined, {}, argPipes as (Type<PipeTransform> | PipeTransform)[]];
 }
+/*
+
+  async recipe(
+    @Args('id', {
+      defaultValue: '1',
+      description: 'recipe id',
+    })
+    id: string,
+  ): Promise<IRecipe> {
+    const recipe = await this.recipesService.findOneById(id);
+    if (!recipe) {
+      throw new NotFoundException(id);
+    }
+    return recipe;
+  }
+
+*/

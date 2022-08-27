@@ -162,3 +162,13 @@ export class ObjectTypeDefinitionFactory {
     };
   }
 }
+/*
+var PersonType = new GraphQLObjectType({
+  name: 'Person',
+  fields: () => ({
+    parents: { type: new GraphQLList(PersonType) },
+    children: { type: new GraphQLList(PersonType) },
+  })
+});
+
+*/

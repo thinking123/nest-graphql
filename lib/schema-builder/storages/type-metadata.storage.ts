@@ -200,25 +200,25 @@ export class TypeMetadataStorageHost {
     this.fieldDirectives.reverse();
     this.fieldExtensions.reverse();
 
-    const classMetadata = [
+    const classMetadata = [ //所有的　Object　Type
       ...this.objectTypes,
       ...this.inputTypes,
       ...this.argumentTypes,
       ...this.interfaces,
     ];
-    this.loadClassPluginMetadata(classMetadata);
-    this.compileClassMetadata(classMetadata);
-    this.compileFieldResolverMetadata(this.fieldResolvers);
+    this.loadClassPluginMetadata(classMetadata); // load static METADATA_FACTORY_NAME
+    this.compileClassMetadata(classMetadata); // 设置 ObjectType 的所有属性 @Field === properties
+    this.compileFieldResolverMetadata(this.fieldResolvers);// @ResolveField(external) @Field('internal') get(){} ， 设置 所有 ResolveField 和 Field （如果是get()) 的args，添加 ResolveField 对应的 field to Resolver type 的 ObjectType 
 
     const resolversMetadata = [
       ...this.queries,
       ...this.mutations,
       ...this.subscriptions,
-    ];
-    this.compileResolversMetadata(resolversMetadata);
-    this.compileExtendedResolversMetadata();
+    ]; 
+    this.compileResolversMetadata(resolversMetadata);// 设置@Query @Args
+    this.compileExtendedResolversMetadata(); // class extends class
 
-    orphanedTypes
+    orphanedTypes// [] 
       .filter((type) => type && type.prototype)
       .forEach((type) => this.applyPluginMetadata(type.prototype));
   }
@@ -236,7 +236,7 @@ export class TypeMetadataStorageHost {
       }
       if (!prototype.constructor[METADATA_FACTORY_NAME]) {
         continue;
-      }
+      } //  static [METADATA_FACTORY_NAME] () {}
       const metadata = prototype.constructor[METADATA_FACTORY_NAME]();
       const properties = Object.keys(metadata);
       properties.forEach((key) => {
@@ -286,7 +286,7 @@ export class TypeMetadataStorageHost {
   private getClassFieldsByPredicate(
     belongsToClass: (item: PropertyMetadata) => boolean,
   ) {
-    const fields = this.fields.filter(belongsToClass);
+    const fields = this.fields.filter(belongsToClass); // 属于相同Class 的fields , item {class}
     fields.forEach((field) => {
       const isHostEqual = isTargetEqual.bind(undefined, field);
       field.methodArgs = this.params.filter(
@@ -307,10 +307,10 @@ export class TypeMetadataStorageHost {
       const isTypeEqual = isTargetEqual.bind(undefined, item);
       const resolverMetadata = this.resolvers.find(isTypeEqual);
 
-      item.classMetadata = resolverMetadata;
+      item.classMetadata = resolverMetadata;　// 连接 Query -> Resolver class type
       item.methodArgs = this.params.filter(
         (param) => isTypeEqual(param) && item.methodName === param.methodName,
-      );
+      ); // 连接@Args
       item.directives = this.fieldDirectives.filter(
         this.isFieldDirectiveOrExtension.bind(this, item),
       );
@@ -319,7 +319,7 @@ export class TypeMetadataStorageHost {
         .reduce((curr, acc) => ({ ...curr, ...acc.value }), {});
     });
   }
-
+ // ResolverField : external , Field :  get(){}
   private compileFieldResolverMetadata(metadata: FieldResolverMetadata[]) {
     this.compileResolversMetadata(metadata);
 
@@ -347,10 +347,10 @@ export class TypeMetadataStorageHost {
     const objectTypeRef = this.resolvers
       .find((el) => isTargetEqual(el, item))
       .typeFn();
-
+ // ResolveField 对应 Resolver 类型 @Resolver((of) => Recipe) === Recipe
     const objectTypeMetadata = this.objectTypes.find(
       (objTypeDef) => objTypeDef.target === objectTypeRef,
-    );
+    ); // ResolveField 对应的field 是否在 ObjectType fields
     const objectTypeField = objectTypeMetadata.properties.find(
       (fieldDef) => fieldDef.name === item.methodName,
     );
@@ -370,7 +370,7 @@ export class TypeMetadataStorageHost {
         directives: item.directives,
         extensions: item.extensions,
         complexity: item.complexity,
-      };
+      }; // 添加到 this.fields
       this.addClassFieldMetadata(fieldMetadata);
 
       objectTypeMetadata.properties.push(fieldMetadata);

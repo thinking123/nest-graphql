@@ -18,7 +18,7 @@ export class GraphQLSchemaBuilder {
     private readonly fileSystemHelper: FileSystemHelper,
   ) {}
 
-  async build(
+  async build( //  从 class 构建 GraphQLSchema
     autoSchemaFile: string | boolean,
     options: GqlModuleOptions,
     resolvers: Function[],
@@ -70,7 +70,7 @@ export class GraphQLSchemaBuilder {
     resolvers: Function[],
     autoSchemaFile: boolean | string,
     options: BuildSchemaOptions = {},
-  ): Promise<GraphQLSchema> {
+  ): Promise<GraphQLSchema> { // 从 class 构建 GraphQLSchema
     const schema = await this.gqlSchemaFactory.create(resolvers, options);
     if (typeof autoSchemaFile !== 'boolean') {
       const filename = isString(autoSchemaFile)

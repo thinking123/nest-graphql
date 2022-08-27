@@ -107,3 +107,13 @@ export class InterfaceDefinitionFactory {
     };
   }
 }
+/*
+var EntityType = new GraphQLInterfaceType({
+  name: 'Entity',
+  fields: {
+    name: { type: GraphQLString }
+  }
+});
+
+
+*/

@@ -103,11 +103,11 @@ export class TypeDefinitionsStorage {
     if (!this.inputTypeDefinitionsLinks) {
       this.inputTypeDefinitionsLinks = new Map<GqlInputTypeKey, GqlInputType>([
         ...this.enumTypeDefinitions.entries(),
-        ...this.inputTypeDefinitions.entries(),
+        ...this.inputTypeDefinitions.entries(), //Input 类型
       ]);
     }
     const definition = this.inputTypeDefinitionsLinks.get(key);
-    if (definition) {
+    if (definition) {// {target: ƒ, isAbstract: false, type:  NewRecipeInput{}}
       return definition.type;
     }
     return;

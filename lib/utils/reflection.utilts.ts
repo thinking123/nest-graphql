@@ -22,7 +22,29 @@ export interface TypeMetadata {
   typeFn: (type?: any) => GqlTypeReference;
   options: TypeOptions;
 }
+/*
+typescript 开启 emitDecoratorMetadata 
 
+会设置 meta 
+
+
+class B {
+
+
+  fun(@dec param1:string , @dec param2:number){
+
+  }
+}
+
+__decorate([
+    __param(0, dec),
+    __param(1, dec),
+    __metadata("design:type", Function), // fun 类型
+    __metadata("design:paramtypes", [String, Number]), // fun 参数类型
+    __metadata("design:returntype", void 0) // fun 返回类型
+], B.prototype, "fun", null);
+
+*/
 export function reflectTypeFromMetadata(
   reflectOptions: ReflectTypeOptions,
 ): TypeMetadata {
@@ -40,7 +62,7 @@ export function reflectTypeFromMetadata(
     metadataKey,
     prototype,
     propertyKey,
-  );
+  ); // 如果是params decorator reflectedType is Array
   const implicitType = extractTypeIfArray(metadataKey, reflectedType, index);
   const isNotAllowed = implicitType && NOT_ALLOWED_TYPES.includes(implicitType);
 

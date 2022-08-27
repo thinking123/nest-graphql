@@ -31,10 +31,29 @@ export function registerEnumType<T extends object = any>(
   options: EnumOptions,
 ) {
   LazyMetadataStorage.store(() =>
-    TypeMetadataStorage.addEnumMetadata({
-      ref: enumRef,
-      name: options.name,
+    TypeMetadataStorage.addEnumMetadata({//this.enums.push(metadata)
+      ref: enumRef, // Direction
+      name: options.name, // "Direction"
       description: options.description,
     }),
   );
 }
+
+/*
+
+
+export enum Direction {
+  Up = 'UP',
+  Down = 'DOWN',
+  Left = 'LEFT',
+  Right = 'RIGHT',
+}
+
+registerEnumType(Direction, {
+  name: 'Direction', // this one is mandatory
+  description: 'The basic directions', // this one is optional
+});
+
+
+
+*/

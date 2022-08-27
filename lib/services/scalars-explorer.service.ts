@@ -31,7 +31,7 @@ export class ScalarsExplorerService extends BaseExplorerService {
       this.filterSchemaFirstScalar(instance),
     );
   }
-
+  //@Scalar('scalarName' , type => ClassType)
   filterSchemaFirstScalar<T extends Record<string, Function | string> = any>(
     wrapper: InstanceWrapper<T>,
   ) {

@@ -15,7 +15,7 @@ export class OrphanedReferenceRegistry {
     if (BANNED_TYPES.includes(typeRef as Function)) {
       return;
     }
-    this.registry.add(typeRef as Function);
+    this.registry.add(typeRef as Function); // custom type : Set( Ingredient , Recipe ) 
   }
 
   getAll(): Function[] {

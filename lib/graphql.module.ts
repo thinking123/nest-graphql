@@ -126,7 +126,7 @@ path:'/graphql'
       inject: [options.useExisting || options.useClass],
     };
   }
-
+// 从 @Query 等 graphql Inject 获取 graphql schema ,init apolloServer
   async onModuleInit() {
     if (!this.httpAdapterHost) {
       return;
@@ -141,12 +141,12 @@ path:'/graphql'
       )) || [];
  // mergedTypeDefs = []
     const mergedTypeDefs = extend(typeDefs, this.options.typeDefs);
-    const apolloOptions = await this.graphqlFactory.mergeOptions({
+    const apolloOptions = await this.graphqlFactory.mergeOptions({ // {生成 graphql schema}
       ...this.options,
       typeDefs: mergedTypeDefs,
     });
 
-    if (this.options.definitions && this.options.definitions.path) {
+    if (this.options.definitions && this.options.definitions.path) { // false 
       await this.graphqlFactory.generateDefinitions(
         printSchema(apolloOptions.schema),
         this.options,
@@ -154,7 +154,7 @@ path:'/graphql'
     }
 
     this.registerGqlServer(apolloOptions);
-    if (this.options.installSubscriptionHandlers) {
+    if (this.options.installSubscriptionHandlers) { // init Subscription
       this.apolloServer.installSubscriptionHandlers(
         httpAdapter.getHttpServer(),
       );
@@ -179,7 +179,7 @@ path:'/graphql'
       'apollo-server-express',
       'GraphQLModule',
       () => require('apollo-server-express'),
-    );
+    ); // 设置 graphql 路径 default === '/graphql'
     const path = this.getNormalizedPath(apolloOptions);
     const {
       disableHealthCheck,
@@ -244,3 +244,34 @@ path:'/graphql'
       : gqlOptionsPath;
   }
 }
+
+/*
+
+import { ApolloServer } from 'apollo-server-express';
+import {
+  ApolloServerPluginDrainHttpServer,
+  ApolloServerPluginLandingPageLocalDefault,
+} from 'apollo-server-core';
+import express from 'express';
+import http from 'http';
+
+async function startApolloServer(typeDefs, resolvers) {
+  const app = express();
+  const httpServer = http.createServer(app);
+  const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    csrfPrevention: true,
+    cache: 'bounded',
+    plugins: [
+      ApolloServerPluginDrainHttpServer({ httpServer }),
+      ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+    ],
+  });
+  await server.start();
+  server.applyMiddleware({ app });
+  await new Promise<void>(resolve => httpServer.listen({ port: 4000 }, resolve));
+}
+
+
+*/

@@ -37,7 +37,8 @@ export class BaseExplorerService {
     };// flattenDeep([1,[2,[3]]]) === [1,2,3] , identity([1,2] , [2,3]) == [1,2]
     return flattenDeep(invokeMap()).filter(identity);
   }
-
+  // 按照Query，Mutation，Subsciptons，ClassName（ResolverField），分组
+  // 每组的内容是 {functionName:callback,...}
   groupMetadata(resolvers: ResolverMetadata[]) {
     const groupByType = groupBy(
       resolvers,
@@ -57,3 +58,56 @@ export class BaseExplorerService {
     return groupedMetadata;
   }
 }
+/*
+groupedMetadata = {
+  "Query":{
+    addRecipe:callback()
+  },
+  
+
+}
+groupMetadata(resolvers)
+resolvers = [
+  { type: "Query", methodName: "recipe", name: "recipe", callback: "callback" },
+  { type: "Query", methodName: "search", name: "search", callback: "callback" },
+  {
+    type: "Query",
+    methodName: "recipes",
+    name: "recipes",
+    callback: "callback",
+  },
+  {
+    type: "Mutation",
+    methodName: "addRecipe",
+    name: "addRecipe",
+    callback: "callback",
+  },
+  {
+    type: "Recipe",
+    methodName: "getIngredients",
+    name: "ingredients",
+    callback: "callback",
+  },
+  { type: "Recipe", methodName: "count", name: "count", callback: "callback" },
+  {
+    type: "Recipe",
+    methodName: "rating",
+    name: "rating",
+    callback: "callback",
+  },
+  {
+    type: "Mutation",
+    methodName: "removeRecipe",
+    name: "removeRecipe",
+    callback: "callback",
+  },
+  {
+    type: "Subscription",
+    methodName: "recipeAdded",
+    name: "recipeAdded",
+    callback: { subscribe: "callback" },
+  },
+  { type: "Query", methodName: "move", name: "move", callback: "callback" },
+];
+
+*/

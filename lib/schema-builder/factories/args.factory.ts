@@ -20,7 +20,7 @@ export class ArgsFactory {
       if (param.kind === 'arg') {
         fieldConfigMap[param.name] = {
           description: param.description,
-          type: this.inputTypeFactory.create(
+          type: this.inputTypeFactory.create( // @Args params type
             param.name,
             param.typeFn(),
             options,
@@ -48,7 +48,7 @@ export class ArgsFactory {
         this.inheritParentArgs(argumentType, options, fieldConfigMap);
       }
     });
-    return fieldConfigMap;
+    return fieldConfigMap; //@Args("id") id:string === {"id":{"type":"String!"}}
   }
 
   private inheritParentArgs(

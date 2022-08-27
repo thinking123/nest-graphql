@@ -46,7 +46,7 @@ export class GraphQLSchemaFactory {
     resolvers: Function[],
     scalarsOrOptions: Function[] | BuildSchemaOptions = [],
     options: BuildSchemaOptions = {},
-  ): Promise<GraphQLSchema> {
+  ): Promise<GraphQLSchema> { // 从 class 构建 GraphQLSchema
     if (Array.isArray(scalarsOrOptions)) {
       this.assignScalarObjects(scalarsOrOptions, options);
     } else {
@@ -54,7 +54,7 @@ export class GraphQLSchemaFactory {
     }
 
     TypeMetadataStorage.clear();
-    LazyMetadataStorage.load(resolvers);
+    LazyMetadataStorage.load(resolvers);// 加载所有的类型 from LazyMetadataStorage to TypeMetadataStorage
     TypeMetadataStorage.compile(options.orphanedTypes);
 
     this.typeDefinitionsGenerator.generate(options);

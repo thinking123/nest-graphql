@@ -12,7 +12,7 @@ export class MutationTypeFactory {
     typeRefs: Function[],
     options: BuildSchemaOptions,
   ): GraphQLObjectType {
-    const objectTypeName = 'Mutation';
+    const objectTypeName = 'Mutation';//this.mutations;
     const mutationsMetadata = TypeMetadataStorage.getMutationsMetadata();
 
     return this.rootTypeFactory.create(

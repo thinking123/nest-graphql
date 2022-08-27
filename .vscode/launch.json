@@ -21,5 +21,18 @@
         "${workspaceFolder}/tests/e2e/code-first.spec.ts",
       ],
      },
+     {
+      "name": "windows debug graphql",
+      "request": "launch",
+      "runtimeArgs": [
+        "run-script",
+        "test1"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+     }
   ]
 }

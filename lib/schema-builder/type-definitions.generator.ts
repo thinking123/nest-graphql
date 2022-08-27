@@ -20,7 +20,7 @@ export class TypeDefinitionsGenerator {
   ) {}
 
   generate(options: BuildSchemaOptions) {
-    this.generateUnionDefs();
+    this.generateUnionDefs(); // 添加union ，graphql 类型 ： GraphQLUnionType ， unionTypeDefinitions.add(symbol(id) , {})
     this.generateEnumDefs();
     this.generateInterfaceDefs(options);
     this.generateObjectTypeDefs(options);

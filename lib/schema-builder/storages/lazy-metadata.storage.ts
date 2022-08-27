@@ -20,7 +20,7 @@ export class LazyMetadataStorageHost {
   }
 
   load(types: Function[] = []) {
-    types = this.concatPrototypes(types);
+    types = this.concatPrototypes(types);//返回所有的Class 以及extends Class :prototype
     this.storage.forEach(({ func, target }) => {
       if (target && types.includes(target)) {
         func();

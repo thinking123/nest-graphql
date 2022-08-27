@@ -51,3 +51,18 @@ export class UnionDefinitionFactory {
         };
   }
 }
+/*
+var PetType = new GraphQLUnionType({
+  name: 'Pet',
+  types: [ DogType, CatType ],
+  resolveType(value) {
+    if (value instanceof Dog) {
+      return DogType;
+    }
+    if (value instanceof Cat) {
+      return CatType;
+    }
+  }
+});
+
+*/
